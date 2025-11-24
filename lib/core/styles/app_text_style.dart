@@ -23,4 +23,9 @@ class AppTextStyle {
     fontWeight: FontWeight.normal,
     color: AppColors.blackColor,
   );
+  static TextStyle white14SemiBold = GoogleFonts.inter(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: AppColors.whiteColor,
+  );
 }

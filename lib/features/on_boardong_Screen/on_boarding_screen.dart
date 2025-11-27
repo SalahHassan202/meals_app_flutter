@@ -2,6 +2,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:meals_app/core/routing/app_routes.dart';
 import 'package:meals_app/core/styles/app_assets.dart';
 import 'package:meals_app/core/styles/app_colors.dart';
 import 'package:meals_app/core/styles/app_text_style.dart';
@@ -28,7 +30,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   ];
 
   int currentIndex = 0;
-
+  CarouselSliderController carouselController = CarouselSliderController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,6 +69,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     children: [
                       /// ---------- CAROUSEL ----------
                       CarouselSlider(
+                        carouselController: carouselController,
+
                         options: CarouselOptions(
                           height: 230.h,
                           viewportFraction: 0.95,
@@ -123,6 +127,61 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           ),
                         ),
                       ),
+                      const Spacer(),
+                      currentIndex >= 2
+                          ? InkWell(
+                              onTap: () {
+                                GoRouter.of(
+                                  context,
+                                ).pushReplacementNamed(AppRoutes.homeScreen);
+                              },
+                              child: Container(
+                                width: 60.sp,
+                                height: 60.sp,
+                                decoration: BoxDecoration(
+                                  color: AppColors.whiteColor,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Icon(
+                                  Icons.arrow_forward,
+                                  size: 17,
+                                  color: AppColors.primaryColor,
+                                ),
+                              ),
+                            )
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                InkWell(
+                                  onTap: () {
+                                    GoRouter.of(context).pushReplacementNamed(
+                                      AppRoutes.homeScreen,
+                                    );
+                                  },
+                                  child: Text(
+                                    "Skip",
+                                    style: AppTextStyle.onBoardingSubTitleStyle,
+                                  ),
+                                ),
+                                InkWell(
+                                  onTap: () {
+                                    if (currentIndex < 2) {
+                                      setState(() {
+                                        currentIndex++;
+                                        carouselController.animateToPage(
+                                          currentIndex,
+                                        );
+                                      });
+                                    }
+                                  },
+
+                                  child: Text(
+                                    "Next",
+                                    style: AppTextStyle.onBoardingSubTitleStyle,
+                                  ),
+                                ),
+                              ],
+                            ),
                     ],
                   ),
                 ),

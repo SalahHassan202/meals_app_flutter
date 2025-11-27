@@ -5,7 +5,7 @@ import 'package:meals_app/core/styles/app_colors.dart';
 
 class AppTextStyle {
   static TextStyle onBoardingPrimaryStyle = GoogleFonts.inter(
-    fontSize: 32.sp,
+    fontSize: 26.sp,
     fontWeight: FontWeight.w800,
     color: AppColors.whiteColor,
   );

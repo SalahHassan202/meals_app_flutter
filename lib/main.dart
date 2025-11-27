@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
       designSize: const Size(375, 812),
       builder: (context, child) {
         return MaterialApp.router(
+          debugShowCheckedModeBanner: false,
           title: "Meals App",
           routerConfig: RouterGenerationConfig.goRouter,
         );

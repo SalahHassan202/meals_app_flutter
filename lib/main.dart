@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:meals_app/core/routing/router_generation_config.dart';
+import 'package:meals_app/features/on_boardong_Screen/on_boarding_services/on_boarding_services.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await OnBoardingServices.initaializeSharedPref();
   runApp(const MyApp());
 }
 

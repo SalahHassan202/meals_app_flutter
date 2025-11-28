@@ -8,6 +8,7 @@ import 'package:meals_app/core/styles/app_assets.dart';
 import 'package:meals_app/core/styles/app_colors.dart';
 import 'package:meals_app/core/styles/app_text_style.dart';
 import 'package:meals_app/core/widgets/spacing_widget.dart';
+import 'package:meals_app/features/on_boardong_Screen/on_boarding_services/on_boarding_services.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -31,6 +32,20 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
   int currentIndex = 0;
   CarouselSliderController carouselController = CarouselSliderController();
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      bool isFirstTime = OnBoardingServices.isFirstTime();
+      OnBoardingServices.setFirstTimeWithFalse();
+      if (isFirstTime == false) {
+        GoRouter.of(context).pushReplacementNamed(AppRoutes.homeScreen);
+      }
+    });
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

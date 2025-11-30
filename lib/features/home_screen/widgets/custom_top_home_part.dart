@@ -14,29 +14,27 @@ class CustomTopHomePartWidget extends StatelessWidget {
         Image.asset(
           AppAssets.topPicHomeScreen,
           width: double.infinity,
-          height: 300.h,
+          height: 250.h,
           fit: BoxFit.fill,
         ),
         Positioned(
           left: 15.w,
           top: 30.h,
           bottom: 30.h,
-          child: Opacity(
-            opacity: 0.1,
-            child: Container(
-              width: 186.w,
-              height: 180.h,
-              padding: EdgeInsets.all(8.sp),
-              decoration: BoxDecoration(
-                color: AppColors.primaryColor,
-                borderRadius: BorderRadius.circular(48),
-              ),
-              alignment: Alignment.center,
-              child: Text(
-                "Welcome Add A New Recipe",
-                textAlign: TextAlign.left,
-                style: AppTextStyle.onBoardingPrimaryStyle,
-              ),
+          child: Container(
+            width: 170.w,
+            height: 150.h,
+            padding: EdgeInsets.all(8.sp),
+            decoration: BoxDecoration(
+              // ignore: deprecated_member_use
+              color: AppColors.primaryColor.withOpacity(.1),
+              borderRadius: BorderRadius.circular(48),
+            ),
+            alignment: Alignment.center,
+            child: Text(
+              "Welcome Add A New Recipe",
+              textAlign: TextAlign.left,
+              style: AppTextStyle.onBoardingPrimaryStyle,
             ),
           ),
         ),

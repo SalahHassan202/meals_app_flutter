@@ -1,65 +1,109 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:meals_app/core/styles/app_text_style.dart';
+import 'package:go_router/go_router.dart';
+import 'package:meals_app/core/routing/app_routes.dart';
+import 'package:meals_app/core/styles/app_colors.dart';
+import 'package:meals_app/core/styles/app_text_style.dart' show AppTextStyle;
 import 'package:meals_app/core/widgets/spacing_widget.dart';
+import 'package:meals_app/features/home_screen/data/db_helper/dp_helper.dart';
+import 'package:meals_app/features/home_screen/data/models/meal_model.dart';
 import 'package:meals_app/features/home_screen/widgets/custom_food_item_widget.dart';
 import 'package:meals_app/features/home_screen/widgets/custom_top_home_part.dart';
 
-class HomeScreen extends StatefulWidget {
+DatabaseHelper dbHelper = DatabaseHelper.instance;
+
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomTopHomePartWidget(),
-            HightSpace(16),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: 8.sp),
-                  child: Text(
-                    "Your Food",
-                    style: AppTextStyle.black16Medium,
-                    textAlign: TextAlign.start,
-                  ),
+            const CustomTopHomePartWidget(),
+            HightSpace(25),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 8.sp),
+                      child: Text(
+                        "Your Food",
+                        style: AppTextStyle.black16Medium,
+                      ),
+                    ),
+                    HightSpace(25),
+                    Expanded(
+                      child: FutureBuilder(
+                        future: dbHelper.getMeals(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(
+                                color: AppColors.primaryColor,
+                              ),
+                            );
+                          } else if (snapshot.hasData) {
+                            if (snapshot.data!.isEmpty) {
+                              return Center(
+                                child: Text(
+                                  "No Meals Found",
+                                  style: AppTextStyle.black16Medium,
+                                ),
+                              );
+                            }
+                            return GridView.builder(
+                              itemCount: snapshot.data!.length,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    mainAxisSpacing: 22.sp,
+                                    crossAxisSpacing: 16.sp,
+                                    childAspectRatio: 0.9,
+                                  ),
+                              itemBuilder: (context, index) {
+                                Meal meal = snapshot.data![index];
+                                return FoodItemWidget(
+                                  imageUrl: meal.imageUrl,
+                                  name: meal.name,
+                                  rate: meal.rate,
+                                  time: meal.time,
+                                  onTap: () {
+                                    GoRouter.of(context).pushNamed(
+                                      AppRoutes.mealDetailsScreen,
+                                      extra: meal,
+                                    );
+                                  },
+                                );
+                              },
+                            );
+                          } else if (snapshot.hasError) {
+                            return Center(child: Text("${snapshot.error}"));
+                          }
+
+                          return Container();
+                        },
+                      ),
+                    ),
+                  ],
                 ),
-                HightSpace(24),
-                FoodItemWidget(
-                  imageUrl:
-                      'https://pngtree.com/freepng/delicious-and-testy-cheese-burger_16763714.html',
-                  name: 'burger',
-                  rate: 4.5,
-                  time: '20/40',
-                  onTap: () {},
-                ),
-                FoodItemWidget(
-                  imageUrl:
-                      'https://pngtree.com/freepng/delicious-and-testy-cheese-burger_16763714.html',
-                  name: 'burger',
-                  rate: 4.5,
-                  time: '20/40',
-                  onTap: () {},
-                ),
-                FoodItemWidget(
-                  imageUrl:
-                      'https://pngtree.com/freepng/delicious-and-testy-cheese-burger_16763714.html',
-                  name: 'burger',
-                  rate: 4.5,
-                  time: '20/40',
-                  onTap: () {},
-                ),
-              ],
+              ),
             ),
           ],
+        ),
+        floatingActionButton: FloatingActionButton(
+          shape: const CircleBorder(),
+          backgroundColor: AppColors.primaryColor,
+          child: Icon(Icons.add, color: Colors.white, size: 30.sp),
+          onPressed: () {
+            GoRouter.of(context).pushNamed(AppRoutes.addMeal);
+          },
         ),
       ),
     );

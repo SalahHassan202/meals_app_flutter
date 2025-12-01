@@ -28,7 +28,7 @@ class PrimayButtonWidget extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPress,
       style: ElevatedButton.styleFrom(
-        backgroundColor: buttonColor ?? AppColors.whiteColor,
+        backgroundColor: buttonColor ?? AppColors.primaryColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(100.r),
         ),
@@ -39,7 +39,7 @@ class PrimayButtonWidget extends StatelessWidget {
         style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: fontSize ?? 14.sp,
-          color: textColor ?? AppColors.primaryColor,
+          color: textColor ?? AppColors.whiteColor,
         ),
       ),
     );

@@ -27,8 +27,8 @@ class RouterGenerationConfig {
         builder: (context, state) => const AddMealScreen(),
       ),
       GoRoute(
-        path: AppRoutes.mealDetailsScreen,
-        name: AppRoutes.mealDetailsScreen,
+        path: AppRoutes.mealdeatailsScreen,
+        name: AppRoutes.mealdeatailsScreen,
         builder: (context, state) {
           Meal meal = state.extra as Meal;
           return MealDetailsScreen(meal: meal);

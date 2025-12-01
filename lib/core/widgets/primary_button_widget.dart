@@ -39,7 +39,7 @@ class PrimayButtonWidget extends StatelessWidget {
         style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: fontSize ?? 14.sp,
-          color: textColor ?? AppColors.whiteColor,
+          color: textColor ?? AppColors.primaryColor,
         ),
       ),
     );

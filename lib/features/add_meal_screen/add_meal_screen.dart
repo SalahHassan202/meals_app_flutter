@@ -141,6 +141,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
 
                             dbHelper.insertMeal(meal).then((value) {
                               GoRouter.of(
+                                // ignore: use_build_context_synchronously
                                 context,
                               ).pushReplacementNamed(AppRoutes.homeScreen);
                             });
